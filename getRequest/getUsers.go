@@ -1,7 +1,6 @@
 package serv
 
 import (
-	"database/sql"
 	"encoding/json"
 	"net/http"
 
@@ -9,20 +8,12 @@ import (
 )
 
 type User struct {
-	Id       int
-	Name     string
-	Password string
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
 }
 
-var db *sql.DB
-var err error
-
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	db, err = sql.Open("mysql", "root:root@tcp(127.0.0.1:8888)/simpleDB")
-	if err != nil {
-		panic(err.Error())
-	}
-	defer db.Close()
 	w.Header().Set("Content-Type", "application/json")
 	var users []User
 	result, err := db.Query("SELECT id, name, password from users")
@@ -30,12 +21,11 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 		panic(err.Error())
 	}
 	defer result.Close()
-
 	for result.Next() {
 		var user User
-		er := result.Scan(&user.Id, &user.Name, &user.Password)
-		if er != nil {
-			panic(er.Error())
+		err := result.Scan(&user.ID, &user.Name, &user.Password)
+		if err != nil {
+			panic(err.Error())
 		}
 		users = append(users, user)
 	}
