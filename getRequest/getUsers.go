@@ -1,4 +1,4 @@
-package serv
+package getRequest
 
 import (
 	"encoding/json"
