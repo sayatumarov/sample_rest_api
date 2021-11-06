@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/sayatumarov/sample_rest_api/getRequest"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {

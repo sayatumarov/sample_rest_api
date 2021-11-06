@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/sayatumarov/sample_rest_api/serv"
 )
 
 type User struct {
@@ -16,7 +16,7 @@ type User struct {
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var users []User
-	result, err := db.Query("SELECT id, name, password from users")
+	result, err := serv.DB.Query("SELECT id, name, password from users")
 	if err != nil {
 		panic(err.Error())
 	}
