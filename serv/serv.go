@@ -11,6 +11,6 @@ func ConnectDB() {
 	if err != nil {
 		panic(err.Error())
 	}
-
+	defer db.Close()
 	DB = db
 }
