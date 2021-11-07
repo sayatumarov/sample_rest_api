@@ -15,10 +15,12 @@ type User struct {
 }
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	db := serv.ConnectDB()
+	if err := serv.DB.Ping(); err != nil {
+		panic(err.Error())
+	}
 	w.Header().Set("Content-Type", "application/json")
 	var users []User
-	result, err := db.Query("SELECT id, name, password from users")
+	result, err := serv.DB.Query("SELECT id, name, password from users")
 	if err != nil {
 		panic(err.Error())
 	}

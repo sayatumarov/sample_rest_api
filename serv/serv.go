@@ -1,16 +1,16 @@
 package serv
 
-import (
-	"database/sql"
+import "database/sql"
 
-	_ "github.com/go-sql-driver/mysql"
-)
+// DB is a global variable to hold db connection
+var DB *sql.DB
 
-func ConnectDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/simpleDB")
+// ConnectDB opens a connection to the database
+func ConnectDB() {
+	db, err := sql.Open("mysql", "root:root@/simpleDB")
 	if err != nil {
 		panic(err.Error())
 	}
-	defer db.Close()
-	return db
+
+	DB = db
 }
